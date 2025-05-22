@@ -55,6 +55,6 @@ with sync_playwright() as playwright:
 
 
     #   Проверить наличие и текст блока "Description"
-    empty_title = page.get_by_test_id("courses-list-empty-view-description-text")
-    expect(empty_title).to_be_visible()
-    expect(empty_title).to_have_text("Results from the load test pipeline will be displayed here")
+    empty_description_text = page.get_by_test_id("courses-list-empty-view-description-text")
+    expect(empty_description_text).to_be_visible()
+    expect(empty_description_text).to_have_text("Results from the load test pipeline will be displayed here")
