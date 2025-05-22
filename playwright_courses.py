@@ -43,7 +43,18 @@ with sync_playwright() as playwright:
     expect(courses_title).to_be_visible()
     expect(courses_title).to_have_text("Courses")
 
+
+    #   Проверить иконку
+    empty_icon = page.get_by_test_id("courses-list-empty-view-icon")
+    expect(empty_icon).to_be_visible()
+
     #   Проверить наличие и текст блока "There is no results"
     empty_title = page.get_by_test_id("courses-list-empty-view-title-text")
     expect(empty_title).to_be_visible()
     expect(empty_title).to_have_text("There is no results")
+
+
+    #   Проверить наличие и текст блока "Description"
+    empty_title = page.get_by_test_id("courses-list-empty-view-description-text")
+    expect(empty_title).to_be_visible()
+    expect(empty_title).to_have_text("Results from the load test pipeline will be displayed here")
