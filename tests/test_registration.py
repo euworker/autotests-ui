@@ -1,6 +1,12 @@
 from playwright.sync_api import sync_playwright, expect
+import pytest
 
-def test_successful_registration():
+
+
+@pytest.mark.regression
+@pytest.mark.registration
+@pytest.mark.authorization
+def test_successful_registration(): 
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
