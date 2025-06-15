@@ -1,35 +1,15 @@
-from playwright.sync_api import expect, Page
 import pytest
+from pages.registration_page import RegistrationPage
+from pages.dashboard_page import DashboardPage
 
 @pytest.mark.regression
 @pytest.mark.registration
 @pytest.mark.authorization
-def test_successful_registration(chromium_page: Page): 
+def test_successful_registration(registration_page: RegistrationPage, dashboard_page: DashboardPage): 
 
-    # Откроет страницу https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration +
-    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    registration_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    registration_page.fill_registration_form("user.name@gmail.com", "username", "password")
+    registration_page.click_registration_button()
 
-    # Заполнит поле "Email" значением "user.name@gmail.com" +
-    registration_email_input = chromium_page.get_by_test_id('registration-form-email-input').locator('input')
-    registration_email_input.fill("user.name@gmail.com")
-
-    # Заполнит поле "Username" значением "username" +
-    registration_username_input = chromium_page.get_by_test_id('registration-form-username-input').locator('input')
-    registration_username_input.fill("username")
-
-    # Заполнит поле "Password" значением "password" +
-    registration_password_input = chromium_page.get_by_test_id('registration-form-password-input').locator('input')
-    registration_password_input.fill("password")
-
-    # Нажмет на кнопку "Registration". После нажатия кнопки "Registration" произойдет редирект на страницу "Dashboard"
-    registration_button = chromium_page.get_by_test_id('registration-page-registration-button')
-    registration_button.click()
-
-    # не совсем уверен в этом блоке -> по идее, нужно  уточнить,куда мы попадаем, в мануальном тесте это вроде как указано - произойдет редирект на страницу "Dashboard"
-    expected_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard'
-    chromium_page.wait_for_url(expected_url)
-
-    # Проверит, что на странице "Dashboard" отображается заголовок "Dashboard"
-    dashboard_title = chromium_page.get_by_test_id("dashboard-toolbar-title-text")
-    expect(dashboard_title).to_be_visible()
-    expect(dashboard_title).to_have_text("Dashboard")
+    dashboard_page.check_dashboard_title_is_visible()
+    

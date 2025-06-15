@@ -1,10 +1,7 @@
-from playwright.sync_api import expect, Page
+# from playwright.sync_api import expect, Page
 import pytest
+from pages.login_page import LoginPage
 
-
-# В задании указан "Пример параметризованного автотеста", что читается не как жесткое требование.
-
-# Сменил язык name на английский для вывода в консоль
 logins_pass_list =[ {
     "name": "user cannot log in with invalid email and password",
     "email": "user.name@gmail.com",
@@ -25,18 +22,13 @@ logins_pass_list =[ {
 @pytest.mark.regression
 @pytest.mark.authorization
 @pytest.mark.parametrize("case", logins_pass_list, ids=lambda test_case: f"{test_case['name']} ({test_case['email']})")
-def test_wrong_email_or_password_authorization(case, chromium_page: Page):
+def test_wrong_email_or_password_authorization(login_page: LoginPage, case):
 
-    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
-    email_input = chromium_page.locator('//div[@data-testid="login-form-email-input"]//div//input')
-    email_input.fill(case["email"])
+    login_page.visit("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
+    login_page.fill_login_form(email=case["email"], password=case["password"])
+    login_page.click_login_button()
+    login_page.check_visible_wrong_email_or_password_alert()
 
-    password_input = chromium_page.locator('//div[@data-testid="login-form-password-input"]//div//input')
-    password_input.fill(case["password"])
+    # chromium_page: Page
 
-    login_button = chromium_page.locator('//button[@data-testid="login-page-login-button"]')
-    login_button.click()
-
-    wrong_email_or_password_alert = chromium_page.locator('//div[@data-testid="login-page-wrong-email-or-password-alert"]') 
-    expect(wrong_email_or_password_alert).to_be_visible()
-    expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
+    
