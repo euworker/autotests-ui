@@ -6,30 +6,30 @@ import pytest
 @pytest.mark.authorization
 def test_successful_registration(chromium_page: Page): 
 
-        # Откроет страницу https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration +
-        chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
+    # Откроет страницу https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration +
+    chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/registration")
 
-        # Заполнит поле "Email" значением "user.name@gmail.com" +
-        registration_email_input = chromium_page.get_by_test_id('registration-form-email-input').locator('input')
-        registration_email_input.fill("user.name@gmail.com")
+    # Заполнит поле "Email" значением "user.name@gmail.com" +
+    registration_email_input = chromium_page.get_by_test_id('registration-form-email-input').locator('input')
+    registration_email_input.fill("user.name@gmail.com")
 
-        # Заполнит поле "Username" значением "username" +
-        registration_username_input = chromium_page.get_by_test_id('registration-form-username-input').locator('input')
-        registration_username_input.fill("username")
+    # Заполнит поле "Username" значением "username" +
+    registration_username_input = chromium_page.get_by_test_id('registration-form-username-input').locator('input')
+    registration_username_input.fill("username")
 
-        # Заполнит поле "Password" значением "password" +
-        registration_password_input = chromium_page.get_by_test_id('registration-form-password-input').locator('input')
-        registration_password_input.fill("password")
-        
-        # Нажмет на кнопку "Registration". После нажатия кнопки "Registration" произойдет редирект на страницу "Dashboard"
-        registration_button = chromium_page.get_by_test_id('registration-page-registration-button')
-        registration_button.click()
+    # Заполнит поле "Password" значением "password" +
+    registration_password_input = chromium_page.get_by_test_id('registration-form-password-input').locator('input')
+    registration_password_input.fill("password")
 
-        # не совсем уверен в этом блоке -> по идее, нужно  уточнить,куда мы попадаем, в мануальном тесте это вроде как указано - произойдет редирект на страницу "Dashboard"
-        expected_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard'
-        chromium_page.wait_for_url(expected_url)
+    # Нажмет на кнопку "Registration". После нажатия кнопки "Registration" произойдет редирект на страницу "Dashboard"
+    registration_button = chromium_page.get_by_test_id('registration-page-registration-button')
+    registration_button.click()
 
-        # Проверит, что на странице "Dashboard" отображается заголовок "Dashboard"
-        dashboard_title = chromium_page.get_by_test_id("dashboard-toolbar-title-text")
-        expect(dashboard_title).to_be_visible()
-        expect(dashboard_title).to_have_text("Dashboard")
+    # не совсем уверен в этом блоке -> по идее, нужно  уточнить,куда мы попадаем, в мануальном тесте это вроде как указано - произойдет редирект на страницу "Dashboard"
+    expected_url = 'https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard'
+    chromium_page.wait_for_url(expected_url)
+
+    # Проверит, что на странице "Dashboard" отображается заголовок "Dashboard"
+    dashboard_title = chromium_page.get_by_test_id("dashboard-toolbar-title-text")
+    expect(dashboard_title).to_be_visible()
+    expect(dashboard_title).to_have_text("Dashboard")
